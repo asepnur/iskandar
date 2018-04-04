@@ -1,0 +1,18 @@
+{
+    "webserver": {
+        "port": "80"
+    },
+    "database": {
+        "host": "localhost",
+        "port": "3306",
+        "username": "iskandar",
+        "password": "iskandar@123",
+        "driver": "mysql",
+        "database": "exercise"
+    },
+    "directory": {
+        "static": "/var/www/iskandar/static",
+        "email": "/var/www/iskandar/email",
+        "data": "/var/www/iskandar/data"
+    }
+}

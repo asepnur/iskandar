@@ -1,0 +1,22 @@
+{
+    "webserver": {
+        "port": "9000"
+    },
+    "database": {
+        "host": "devel-postgre.tkpd",
+        "port": "5432",
+        "username": "ai180402",
+        "password": "xisaetooSieJeilo5jah",
+        "database": "tokopedia-user",
+        "driver": "postgres"
+    },
+    "redis": {
+        "address": "localhost:6379",
+        "password": ""
+    },
+    "directory": {
+        "static": "files/var/www/iskandar/static",
+        "email": "files/var/www/iskandar/email",
+        "data": "files/var/www/iskandar/data"
+    }
+}
