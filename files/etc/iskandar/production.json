@@ -1,18 +1,17 @@
 {
     "webserver": {
-        "port": "80"
+        "port": "9000"
     },
     "database": {
-        "host": "localhost",
-        "port": "3306",
-        "username": "iskandar",
-        "password": "iskandar@123",
-        "driver": "mysql",
-        "database": "exercise"
+        "host": "devel-postgre.tkpd",
+        "port": "5432",
+        "username": "ai180402",
+        "password": "xisaetooSieJeilo5jah",
+        "database": "tokopedia-user",
+        "driver": "postgres"
     },
-    "directory": {
-        "static": "/var/www/iskandar/static",
-        "email": "/var/www/iskandar/email",
-        "data": "/var/www/iskandar/data"
+    "redis": {
+        "address": "localhost:6379",
+        "password": ""
     }
 }

@@ -24,12 +24,16 @@ var DB *sql.DB
 // InitDB ..
 func InitDB(cfg DatabaseConfig) {
 	log.Println("Initalizing database")
-	connString := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", cfg.UserName, cfg.Password, cfg.Host, cfg.Database)
+
+	connString := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable",
+		cfg.UserName, cfg.Password, cfg.Host, cfg.Database)
+
 	db, err := sql.Open("postgres", connString)
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
 	DB = db
+
 	log.Println("Database succesfully connected")
 }

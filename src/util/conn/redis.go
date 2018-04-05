@@ -16,9 +16,6 @@ type RedisConfig struct {
 // Redis variable :: References variable Redis to store redis connection
 var Redis *redis.Pool
 
-// RD variable :: References variable Redis to store redis connection
-var RD *redis.Pool
-
 // InitRedis for initial connection to redis
 func InitRedis(cfg RedisConfig) {
 	log.Println("Initializing Redis")

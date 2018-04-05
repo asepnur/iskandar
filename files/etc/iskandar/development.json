@@ -13,10 +13,5 @@
     "redis": {
         "address": "localhost:6379",
         "password": ""
-    },
-    "directory": {
-        "static": "files/var/www/iskandar/static",
-        "email": "files/var/www/iskandar/email",
-        "data": "files/var/www/iskandar/data"
     }
 }

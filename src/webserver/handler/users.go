@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	us "github.com/asepnur/iskandar/src/module/users"
@@ -33,7 +34,9 @@ func SelectUserHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 			MSISDN:    el.MSISDN,
 		})
 	}
-	_, err = us.GetVisitor()
+
+	el, err := us.GetVisitor()
+	us.IncreaseVisitor(fmt.Sprintf("%d", el))
 
 	template.RenderJSONResponse(w, new(template.Response).
 		SetCode(http.StatusOK).

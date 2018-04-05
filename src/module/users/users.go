@@ -2,12 +2,14 @@ package users
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/asepnur/iskandar/src/util/conn"
+	nsq "github.com/bitly/go-nsq"
 	"github.com/garyburd/redigo/redis"
 )
 
-// User ..
+// User ::
 type User struct {
 	UserID    int
 	UserEmail string
@@ -15,7 +17,7 @@ type User struct {
 	MSISDN    string
 }
 
-// GetMultipleUser ..
+// GetMultipleUser ::
 func GetMultipleUser() ([]User, error) {
 	var res []User
 	query := fmt.Sprintf(`
@@ -52,4 +54,17 @@ func GetVisitor() (int, error) {
 		return el, err
 	}
 	return el, nil
+}
+
+// IncreaseVisitor ::
+func IncreaseVisitor(current string) {
+	topic := "180204"
+	config := nsq.NewConfig()
+	w, _ := nsq.NewProducer("devel-go.tkpd:4150", config)
+	err := w.Publish(topic, []byte(fmt.Sprintf("%s", current)))
+	if err != nil {
+		log.Panic("Could not connect")
+	}
+
+	w.Stop()
 }

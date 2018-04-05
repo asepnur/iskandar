@@ -4,7 +4,6 @@ import (
 	"flag"
 	"log"
 
-	"github.com/asepnur/iskandar/src/util/alias"
 	"github.com/asepnur/iskandar/src/util/conn"
 	"github.com/asepnur/iskandar/src/util/env"
 	"github.com/asepnur/iskandar/src/util/jsonconfig"
@@ -12,10 +11,9 @@ import (
 )
 
 type configuration struct {
-	Directory alias.DirectoryConfig `json:"directory"`
-	Database  conn.DatabaseConfig   `json:"database"`
-	Redis     conn.RedisConfig      `json:"redis"`
-	Webserver webserver.Config      `json:"webserver"`
+	Database  conn.DatabaseConfig `json:"database"`
+	Redis     conn.RedisConfig    `json:"redis"`
+	Webserver webserver.Config    `json:"webserver"`
 }
 
 func main() {
@@ -29,8 +27,8 @@ func main() {
 		log.Fatal("Failed to load configuration")
 	}
 	// initialize instance
-	alias.InitDirectory(config.Directory)
 	conn.InitRedis(config.Redis)
+	conn.Consume("180204", "iskandar")
 	conn.InitDB(config.Database)
 	webserver.Start(config.Webserver)
 }
