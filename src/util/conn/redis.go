@@ -7,13 +7,19 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
+// RedisConfig for configuration connecion
 type RedisConfig struct {
 	Address  string `json:"address"`
 	Password string `json:"password"`
 }
 
+// Redis variable :: References variable Redis to store redis connection
 var Redis *redis.Pool
 
+// RD variable :: References variable Redis to store redis connection
+var RD *redis.Pool
+
+// InitRedis for initial connection to redis
 func InitRedis(cfg RedisConfig) {
 	log.Println("Initializing Redis")
 	Redis = &redis.Pool{
@@ -35,6 +41,25 @@ func InitRedis(cfg RedisConfig) {
 		log.Fatalln("Redis connection failed")
 		return
 	}
-
 	log.Println("Redis successfully connected")
+
+	InitVisitor()
+}
+
+// InitVisitor for initialize key visitor
+func InitVisitor() error {
+	key := "visitor"
+	client := Redis.Get()
+	defer client.Close()
+	el, err := client.Do("GET", key)
+	if err != nil {
+		return err
+	}
+	if el == nil {
+		_, err = redis.String(client.Do("SET", key, 1))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

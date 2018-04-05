@@ -4,17 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
+	// pq
 	_ "github.com/lib/pq"
 )
 
+// DatabaseConfig :: configure database connection
 type DatabaseConfig struct {
-	Host     string `json: "host"`
-	Port     string `json: "port`
-	UserName string `json: "username`
-	Password string `json: "password"`
-	Driver   string `json: "driver`
-	Database string `json: "database`
+	Host     string `json:"host"`
+	Port     string `json:"port"`
+	UserName string `json:"username"`
+	Password string `json:"password"`
+	Driver   string `json:"driver"`
+	Database string `json:"database"`
 }
 
 // DB .. save connection

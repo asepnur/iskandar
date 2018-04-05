@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/asepnur/iskandar/src/util/conn"
+	"github.com/garyburd/redigo/redis"
 )
 
 // User ..
@@ -39,4 +40,16 @@ func GetMultipleUser() ([]User, error) {
 		res = append(res, *u)
 	}
 	return res, nil
+}
+
+// GetVisitor :: to get visitors value
+func GetVisitor() (int, error) {
+	var el int
+	key := "visitor"
+	client := conn.Redis.Get()
+	el, err := redis.Int(client.Do("GET", key))
+	if err != nil {
+		return el, err
+	}
+	return el, nil
 }
