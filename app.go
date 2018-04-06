@@ -10,6 +10,11 @@ import (
 	"github.com/asepnur/iskandar/src/webserver"
 )
 
+var (
+	topic  = "180204"
+	chanel = "iskandar"
+)
+
 type configuration struct {
 	Database  conn.DatabaseConfig `json:"database"`
 	Redis     conn.RedisConfig    `json:"redis"`
@@ -22,13 +27,13 @@ func main() {
 	// load config
 	cfgenv := env.Get()
 	config := &configuration{}
-	isLoaded := jsonconfig.Load(&config, "/etc/iskandar", cfgenv) || jsonconfig.Load(&config, "./files/etc/iskandar", cfgenv)
+	isLoaded := jsonconfig.Load(&config, "/etc", cfgenv) || jsonconfig.Load(&config, "./files/etc", cfgenv)
 	if !isLoaded {
 		log.Fatal("Failed to load configuration")
 	}
 	// initialize instance
 	conn.InitRedis(config.Redis)
-	conn.Consume("180204", "iskandar")
+	conn.Consume(topic, chanel)
 	conn.InitDB(config.Database)
 	webserver.Start(config.Webserver)
 }
