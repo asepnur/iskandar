@@ -6,6 +6,6 @@ import (
 )
 
 func loadRouter(r *httprouter.Router) {
+	r.GET("/", handler.ViewHTML)
 	r.GET("/users", handler.SelectUserHandler)
-	r.GET("/filter", handler.SelectUserFilterHandler)
 }

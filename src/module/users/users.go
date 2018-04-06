@@ -3,6 +3,7 @@ package users
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/asepnur/iskandar/src/util/conn"
 	nsq "github.com/bitly/go-nsq"
@@ -11,10 +12,11 @@ import (
 
 // User ::
 type User struct {
-	UserID    int
-	UserEmail string
-	FullName  string
-	MSISDN    string
+	UserID     int
+	UserEmail  string
+	FullName   string
+	MSISDN     int
+	CreateTime time.Time
 }
 
 // GetMultipleUser ::
@@ -25,20 +27,49 @@ func GetMultipleUser() ([]User, error) {
 			user_id,
 			full_name,
 			user_email,
-			msisdn
+			msisdn,
+			create_time
 		FROM
 			ws_user
 		LIMIT 10;
 	`)
 	rows, err := conn.DB.Query(query)
+	defer rows.Close()
 	if err != nil {
-
 		return res, err
 	}
-
 	for rows.Next() {
 		u := &User{}
-		rows.Scan(&u.UserID, &u.FullName, &u.UserEmail, &u.MSISDN)
+		rows.Scan(&u.UserID, &u.FullName, &u.UserEmail, &u.MSISDN, &u.CreateTime)
+		res = append(res, *u)
+	}
+	return res, nil
+}
+
+// GetMultipleByFilter ::
+func GetMultipleByFilter(name string) ([]User, error) {
+	var res []User
+	query := fmt.Sprintf(`
+		SELECT
+			user_id,
+			full_name,
+			user_email,
+			msisdn,
+			create_time
+		FROM
+			ws_user
+		WHERE
+			full_name LIKE ('%%%s%%')
+		LIMIT 10;
+	`, name)
+	rows, err := conn.DB.Query(query)
+	defer rows.Close()
+	if err != nil {
+		return res, err
+	}
+	for rows.Next() {
+		u := &User{}
+		rows.Scan(&u.UserID, &u.FullName, &u.UserEmail, &u.MSISDN, &u.CreateTime)
 		res = append(res, *u)
 	}
 	return res, nil
