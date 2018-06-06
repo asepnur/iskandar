@@ -6,6 +6,7 @@ import (
 )
 
 func loadRouter(r *httprouter.Router) {
-	r.GET("/", handler.ViewHTML)
+	r.GET("/", handler.TestingHTML)
+	r.GET("/nama", handler.ViewHTML)
 	r.GET("/users", handler.SelectUserHandler)
 }

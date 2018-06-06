@@ -39,6 +39,14 @@ func ViewHTML(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	return
 }
 
+// TestingHTML func
+func TestingHTML(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	t.RenderJSONResponse(w, new(t.Response).
+		SetCode(http.StatusOK).
+		SetData("halo"))
+	return
+}
+
 // SelectUserHandler ..
 func SelectUserHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var users []us.User
